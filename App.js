@@ -6,9 +6,7 @@ import AddTodo from './components/addTodo';
 
 export default function App() {
   const [todos, setTodos] = useState([
-    { text: 'buy cdoffee', key: '1' },
-    { text: 'create an app', key: '2' },
-    { text: 'play on the switch', key: '3' }
+   
   ]);
   const pressHandler = (key) =>{
     setTodos((prevTodos) => {
@@ -20,16 +18,31 @@ export default function App() {
     setTodos ((prevTodos) =>
     {
      
-      return [ {text: text, key: Math.random().toString()},
+      if(text != ''){
+        alert('The TODO has been added to the list');
+        return [ {text: text, key: Math.random().toString()},
+          ...prevTodos];
+      }
+      else{
+        alert('The TODO added is Empty!');
+        return [ {text: '**EMPTY TODO**', key: Math.random().toString()},
         ...prevTodos];
+      }
+      
     })
   }
+   
+  
   return (
-    <View style={styles.container}>
+    <View style={styles.container} >
       <Header />
-      <View style={styles.content}>
+      <View style={styles.content} >
         {/* add todo form */}
         <AddTodo submitHandler= {submitHandler}/>
+        <View>
+      <Text style={{textAlign: 'center', marginTop: 10, color:'red'}}> To delete a TODO, Press and hold it!</Text>
+      </View>
+
         <View style={styles.list}>
           <FlatList
             data={todos}
@@ -39,6 +52,7 @@ export default function App() {
           />
         </View>
       </View>
+
     </View>
   );
 }
